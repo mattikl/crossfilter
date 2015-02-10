@@ -107,6 +107,24 @@ h1, h2 {
   width: 920px;
 }
 
+#searches {
+  font-size: smaller;
+}
+
+#searches > input {
+  margin: 10px;
+  border: 1px solid #ccc;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 3px 5px;
+  -webkit-appearance: none;
+}
+
+#searches > input:focus {
+  border-color: #333333;
+}
+
 #flight-list {
   min-height: 1024px;
 }
@@ -186,6 +204,12 @@ aside {
 </div>
 
 <aside id="totals"><span id="active">-</span> of <span id="total">-</span> flights selected.</aside>
+
+<div id="searches">
+  Search for
+  <input id="origin-search" type="text" placeholder="origin" />
+  <input id="destination-search" type="text" placeholder="destination" />
+</div>
 
 <div id="lists">
   <div id="flight-list" class="list"></div>
