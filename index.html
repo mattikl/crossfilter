@@ -261,7 +261,9 @@ d3.csv("flights-3m.json", function(error, flights) {
       delay = flight.dimension(function(d) { return Math.max(-60, Math.min(149, d.delay)); }),
       delays = delay.group(function(d) { return Math.floor(d / 10) * 10; }),
       distance = flight.dimension(function(d) { return Math.min(1999, d.distance); }),
-      distances = distance.group(function(d) { return Math.floor(d / 50) * 50; });
+      distances = distance.group(function(d) { return Math.floor(d / 50) * 50; },
+      origin = flight.dimension(function(d) { return d.origin; }));
+      destination = flight.dimension(function(d) { return d.destination; });
 
   var charts = [
 
@@ -311,6 +313,23 @@ d3.csv("flights-3m.json", function(error, flights) {
   // Render the total.
   d3.selectAll("#total")
       .text(formatNumber(flight.size()));
+
+  // oninput might not work on all browsers but don't want to load
+  // jquery for this
+  d3.select("#origin-search").on('input', filterByText(origin));
+  d3.select("#destination-search").on('input', filterByText(destination));
+
+  function filterByText(f) {
+    return function () {
+      var q = this.value.toUpperCase();
+      if (q.length == 3) { // is airport code always three letters?
+        f.filter(q);
+      } else {
+        f.filterAll();
+      }
+      renderAll();
+    }
+  }
 
   renderAll();
 
